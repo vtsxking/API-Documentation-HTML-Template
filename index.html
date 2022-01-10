@@ -8,9 +8,9 @@
 <html class="no-js" lang="en">
 <head>
     <meta charset="utf-8">
-    <title>API - Documentation</title>
+    <title>Local Node API - Documentation</title>
     <meta name="description" content="">
-    <meta name="author" content="ticlekiwi">
+    <meta name="author" content="vtsxking">
 
     <meta http-equiv="cleartype" content="on">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
@@ -30,7 +30,7 @@
     <div class="content-logo">
         <div class="logo">
             <img alt="platform by Emily van den Heever from the Noun Project" title="platform by Emily van den Heever from the Noun Project" src="images/logo.png" height="32" />
-            <span>API Documentation</span>
+            <span>Local Node API Documentation</span>
         </div>
         <button class="burger-menu-icon" id="button-menu-mobile">
             <svg width="34" height="34" viewBox="0 0 100 100"><path class="line line1" d="M 20,29.000046 H 80.000231 C 80.000231,29.000046 94.498839,28.817352 94.532987,66.711331 94.543142,77.980673 90.966081,81.670246 85.259173,81.668997 79.552261,81.667751 75.000211,74.999942 75.000211,74.999942 L 25.000021,25.000058"></path><path class="line line2" d="M 20,50 H 80"></path><path class="line line3" d="M 20,70.999954 H 80.000231 C 80.000231,70.999954 94.498839,71.182648 94.532987,33.288669 94.543142,22.019327 90.966081,18.329754 85.259173,18.331003 79.552261,18.332249 75.000211,25.000058 75.000211,25.000058 L 25.000021,74.999942"></path></svg>
@@ -39,16 +39,33 @@
     <div class="mobile-menu-closer"></div>
     <div class="content-menu">
         <div class="content-infos">
-            <div class="info"><b>Version:</b> 1.0.5</div>
-            <div class="info"><b>Last Updated:</b> 15th Sep, 2021</div>
+            <div class="info"><b>Version:</b> 0.0.1</div>
+            <div class="info"><b>Last Updated:</b> 9th Jan, 2022</div>
         </div>
         <ul>
             <li class="scroll-to-link active" data-target="content-get-started">
                 <a>GET STARTED</a>
             </li>
-            <li class="scroll-to-link" data-target="content-get-characters">
-                <a>Get Characters</a>
+            <li class="scroll-to-link" data-target="content-get-sync-percentage">
+                <a>Get Sync Percentage</a>
             </li>
+            <li class="scroll-to-link" data-target="content-get-tip">
+                <a>Get Tip</a>
+            </li>
+            <li class="scroll-to-link" data-target="content-get-node-utxo">
+                <a>Get Node Utxo</a>
+            </li>
+            <li class="scroll-to-link" data-target="content-get-external-sync">
+                <a>Get External Sync</a>
+            </li>
+            <li class="scroll-to-link" data-target="content-get-node-info">
+                <a>Get Node Info</a>
+            </li>
+            <li class="scroll-to-link" data-target="content-get-address-info">
+                <a>Get Address Info</a>
+            </li>
+
+
             <li class="scroll-to-link" data-target="content-errors">
                 <a>Errors</a>
             </li>
@@ -63,95 +80,239 @@
             <pre>
     API Endpoint
 
-        https://api.westeros.com/
+        http://node_ip:5000/
                 </pre>
             <p>
-                The Westeros API provides programmatic access to read Game of Thrones data. Retrieve a character, provide an oauth connexion, retrieve a familly, filter them, etc.
-            </p>
-            <p>
-                To use this API, you need an <strong>API key</strong>. Please contact us at <a href="mailto:jon.snow@nightswatch.wes">jon.snow@nightswatch.wes</a> to get your own API key.
+                The Fragminter Local Node API provides programmatic methods to query and interact with the cardano blockchain.
             </p>
         </div>
-        <div class="overflow-hidden content-section" id="content-get-characters">
-            <h2>get characters</h2>
+        <div class="overflow-hidden content-section" id="content-get-sync-percentage">
+            <h2>get sync percentage</h2>
             <pre><code class="bash">
 # Here is a curl example
 curl \
--X POST http://api.westeros.com/character/get \
--F 'secret_key=your_api_key' \
--F 'house=Stark,Bolton' \
--F 'offset=0' \
--F 'limit=50'
+-X GET http://node_ip:5000/get_sync_percent
                 </code></pre>
             <p>
-                To get characters you need to make a POST call to the following url :<br>
-                <code class="higlighted break-word">http://api.westeros.com/character/get</code>
+                To get a float that represents sync percentage to the cardano blockchain you need to make a GET call to the following url :<br>
+                <code class="higlighted break-word">http://node_ip:5000/get_sync_percent</code>
             </p>
             <br>
             <pre><code class="json">
 Result example :
-
+{ 
+    "syncProgress": 100.00
+}
+                </code></pre>
+        </div>
+        <div class="overflow-hidden content-section" id="content-get-tip">
+            <h2>get tip</h2>
+            <pre><code class="bash">
+# Here is a curl example
+curl \
+-X GET http://node_ip:5000/get_tip
+                </code></pre>
+            <p>
+                To get a json of the newest data of the cardano blockchain you need to make a GET call to the following url :<br>
+                <code class="higlighted break-word">http://node_ip:5000/get_tip</code>
+            </p>
+            <br>
+            <pre><code class="json">
+Result example :
 {
-  query:{
-    offset: 0,
-    limit: 50,
-    house: [
-      "Stark",
-      "Bolton"
-    ],
-  }
-  result: [
-    {
-      id: 1,
-      first_name: "Jon",
-      last_name: "Snow",
-      alive: true,
-      house: "Stark",
-      gender: "m",
-      age: 14,
-      location: "Winterfell"
-    },
-    {
-      id: 2,
-      first_name: "Eddard",
-      last_name: "Stark",
-      alive: false,
-      house: "Stark",
-      gender: "m",
-      age: 35,
-      location: 'Winterfell'
-    },
-    {
-      id: 3,
-      first_name: "Catelyn",
-      last_name: "Stark",
-      alive: false,
-      house: "Stark",
-      gender: "f",
-      age: 33,
-      location: "Winterfell"
-    },
-    {
-      id: 4,
-      first_name: "Roose",
-      last_name: "Bolton",
-      alive: false,
-      house: "Bolton",
-      gender: "m",
-      age: 40,
-      location: "Dreadfort"
-    },
-    {
-      id: 5,
-      first_name: "Ramsay",
-      last_name: "Snow",
-      alive: false,
-      house: "Bolton",
-      gender: "m",
-      age: 15,
-      location: "Dreadfort"
-    },
-  ]
+    "block":6737152,
+    "epoch":313,
+    "era":"Alonzo",
+    "hash":"c081a1d68ea8453bafccc465c6f0c048c5bf4c31cbbf9adba634f2719616693d",
+    "slot":50210771,
+    "syncProgress":"100.00"
+}
+                </code></pre>
+        </div>
+
+        <div class="overflow-hidden content-section" id="content-get-node-utxo">
+            <h2>get node utxo</h2>
+            <pre><code class="bash">
+# Here is a curl example
+curl \
+-X GET http://node_ip:5000/get_node_utxo
+                </code></pre>
+            <p>
+                To get a list of utxos and its corresponding amounts of lovelace and/or assets you need to make a GET call to the following url :<br>
+                <code class="higlighted break-word">http://node_ip:5000/get_node_utxo</code>
+            </p>
+            <br>
+            <pre><code class="json">
+Result example :
+[{
+	"tx_hash": "3350d477a8408a3aceea8f70eb9068f9519c74478db3798c3febcde1e60a2882",
+	"tx_in": "0",
+	"amount": [{
+		"unit": "lovelace",
+		"quantity": "1380813"
+	}]
+}, {
+	"tx_hash": "41f773a417f886c07291e7cfb0d0dda3f48193869d596d402ec3f50a2400db02",
+	"tx_in": "0",
+	"amount": [{
+		"unit": "lovelace",
+		"quantity": "1380813"
+	}]
+}, {
+	"tx_hash": "4bfa4fcdb0298a77bd9156c22476900bb3efebec621c7d862244cbee8f8ad577",
+	"tx_in": "0",
+	"amount": [{
+		"unit": "lovelace",
+		"quantity": "1380813"
+	}]
+}, {
+	"tx_hash": "4e4a562868959d6c803f95ba386f391d55af848981304fe13de596abec75da5d",
+	"tx_in": "0",
+	"amount": [{
+		"unit": "lovelace",
+		"quantity": "1447881"
+	}, {
+		"unit": "9ad3e2891f1a0b19d0f552728ccc804a6df7c85d666c3aef5f21b581.616672616d6570726f746f74797065",
+		"quantity": "5"
+	}]
+}, {
+	"tx_hash": "63756554000a10ddf86b57531c9c61ba8aec7c56b9771c12e821cf1d77d766c6",
+	"tx_in": "0",
+	"amount": [{
+		"unit": "lovelace",
+		"quantity": "1555554"
+	}, {
+		"unit": "9ad3e2891f1a0b19d0f552728ccc804a6df7c85d666c3aef5f21b581.576f726c647357697468696e31",
+		"quantity": "1"
+	}]
+}, {
+	"tx_hash": "77d43bf5839d04f2aded8d206d7a84bbacabf75fb97b65f3c60af4d67b35e576",
+	"tx_in": "0",
+	"amount": [{
+		"unit": "lovelace",
+		"quantity": "1555554"
+	}, {
+		"unit": "9ad3e2891f1a0b19d0f552728ccc804a6df7c85d666c3aef5f21b581.576f726c647357697468696e",
+		"quantity": "1"
+	}]
+}, {
+	"tx_hash": "a1c4366531bebef576cb1c13b799bed7fd84a6a4bcb27fd61f9977bf3402590b",
+	"tx_in": "0",
+	"amount": [{
+		"unit": "lovelace",
+		"quantity": "1555554"
+	}, {
+		"unit": "9ad3e2891f1a0b19d0f552728ccc804a6df7c85d666c3aef5f21b581.576f726c647357697468696e3430313231",
+		"quantity": "1"
+	}]
+}, {
+	"tx_hash": "b6a6d9b357a12803dc23c786496494e78bd73cb8bf21a22fd81458b178452bfd",
+	"tx_in": "0",
+	"amount": [{
+		"unit": "lovelace",
+		"quantity": "1555554"
+	}, {
+		"unit": "9ad3e2891f1a0b19d0f552728ccc804a6df7c85d666c3aef5f21b581.576f726c647357697468696e3132393534",
+		"quantity": "1"
+	}]
+}, {
+	"tx_hash": "dc556d1bfe84ba653a320547c099e77ea0b9f34855df75913c48a99669aa71f1",
+	"tx_in": "0",
+	"amount": [{
+		"unit": "lovelace",
+		"quantity": "1555554"
+	}, {
+		"unit": "9ad3e2891f1a0b19d0f552728ccc804a6df7c85d666c3aef5f21b581.576f726c647357697468696e",
+		"quantity": "1"
+	}]
+}, {
+	"tx_hash": "e040d3ef3c918de04ccc15a2a56e19d97eac8d87e924a579fbbdb0a159199e4c",
+	"tx_in": "0",
+	"amount": [{
+		"unit": "lovelace",
+		"quantity": "1555554"
+	}, {
+		"unit": "9ad3e2891f1a0b19d0f552728ccc804a6df7c85d666c3aef5f21b581.576f726c647357697468696e3133353431",
+		"quantity": "1"
+	}]
+}, {
+	"tx_hash": "eae6cd586a74eacdceb63e71424c300a99bf88e92274dd6dead82459f4d4d6e3",
+	"tx_in": "0",
+	"amount": [{
+		"unit": "lovelace",
+		"quantity": "1555554"
+	}, {
+		"unit": "9ad3e2891f1a0b19d0f552728ccc804a6df7c85d666c3aef5f21b581.576f726c647357697468696e",
+		"quantity": "1"
+	}]
+}]
+                </code></pre>
+        </div>
+        <div class="overflow-hidden content-section" id="content-get-external-sync">
+            <h2>get external sync</h2>
+            <pre><code class="bash">
+# Here is a curl example
+curl \
+-X GET http://node_ip:5000/get_external_sync
+                </code></pre>
+            <p>
+                To get a boolean of synchronization by querying a stable address you need to make a GET call to the following url :<br>
+                <code class="higlighted break-word">http://node_ip:5000/get_external_sync</code>
+            </p>
+            <br>
+            <pre><code class="json">
+Result example :
+{ 
+    "isSynced": "True"
+}
+                </code></pre>
+        </div>
+        <div class="overflow-hidden content-section" id="content-get-node-info">
+            <h2>get node info</h2>
+            <pre><code class="bash">
+# Here is a curl example
+curl \
+-X GET http://node_ip:5000/get_node_info
+                </code></pre>
+            <p>
+                To get a json of the current node address information you need to make a GET call to the following url :<br>
+                <code class="higlighted break-word">http://node_ip:5000/get_node_info</code>
+            </p>
+            <br>
+            <pre><code class="json">
+Result example :
+{
+	"address": "addr1qy3wh4nrhet4hxh3cztrdu0x9286shx4xfmn4pj2f0pufygmr9zjlwlp4mj6qnnelgdanl03emul3nrm4tfflut9p9fs5wpsnw",
+	"era": "shelley",
+	"encoding": "bech32",
+	"type": "payment",
+	"base16": "0122ebd663be575b9af1c09636f1e62a8fa85cd532773a864a4bc3c4911b19452fbbe1aee5a04e79fa1bd9fdf1cef9f8cc7baad29ff1650953"
+}
+                </code></pre>
+        </div>
+
+        <div class="overflow-hidden content-section" id="content-get-address-info">
+            <h2>get address info</h2>
+            <pre><code class="bash">
+# Here is a curl example
+curl \
+-X GET http://node_ip:5000/get_address_info \ 
+-H 'Content-Type: application/json' \
+-d '{"address":"addr1qy9ryfzjdmnmfcahwuwy5mrav5t8d5vs5cugepnytrt7yqngz2ux66zp9s5pf2e9ax7jrtvk0jv3gh7ud04fwsv02stqwt9fr7"}'
+                </code></pre>
+            <p>
+                To get a json of the given address information you need to make a POST call to the following url :<br>
+                <code class="higlighted break-word">http://node_ip:5000/get_address_info</code>
+            </p>
+            <br>
+            <pre><code class="json">
+Result example :
+{
+    "address": "addr1qy9ryfzjdmnmfcahwuwy5mrav5t8d5vs5cugepnytrt7yqngz2ux66zp9s5pf2e9ax7jrtvk0jv3gh7ud04fwsv02stqwt9fr7",
+    "era": "shelley",
+    "encoding": "bech32",
+    "type": "payment",
+    "base16": "010a3224526ee7b4e3b7771c4a6c7d651676d190a6388c866458d7e2026812b86d68412c2814ab25e9bd21ad967c99145fdc6bea97418f5416"
 }
                 </code></pre>
             <h4>QUERY PARAMETERS</h4>
@@ -165,55 +326,19 @@ Result example :
                 </thead>
                 <tbody>
                 <tr>
-                    <td>secret_key</td>
+                    <td>Address</td>
                     <td>String</td>
-                    <td>Your API key.</td>
-                </tr>
-                <tr>
-                    <td>search</td>
-                    <td>String</td>
-                    <td>(optional) A search word to find character by name.</td>
-                </tr>
-                <tr>
-                    <td>house</td>
-                    <td>String</td>
-                    <td>
-                        (optional) a string array of houses:
-                    </td>
-                </tr>
-                <tr>
-                    <td>alive</td>
-                    <td>Boolean</td>
-                    <td>
-                        (optional) a boolean to filter alived characters
-                    </td>
-                </tr>
-                <tr>
-                    <td>gender</td>
-                    <td>String</td>
-                    <td>
-                        (optional) a string to filter character by gender:<br>
-                        m: male<br>
-                        f: female
-                    </td>
-                </tr>
-                <tr>
-                    <td>offset</td>
-                    <td>Integer</td>
-                    <td>(optional - default: 0) A cursor for use in pagination. Pagination starts offset the specified offset.</td>
-                </tr>
-                <tr>
-                    <td>limit</td>
-                    <td>Integer</td>
-                    <td>(optional - default: 10) A limit on the number of objects to be returned, between 1 and 100.</td>
+                    <td>The address you want to search.</td>
                 </tr>
                 </tbody>
             </table>
         </div>
+
+
         <div class="overflow-hidden content-section" id="content-errors">
             <h2>Errors</h2>
             <p>
-                The Westeros API uses the following error codes:
+                The Local Node API uses the following error codes:
             </p>
             <table>
                 <thead>
@@ -224,27 +349,9 @@ Result example :
                 </thead>
                 <tbody>
                 <tr>
-                    <td>X000</td>
+                    <td>415</td>
                     <td>
-                        Some parameters are missing. This error appears when you don't pass every mandatory parameters.
-                    </td>
-                </tr>
-                <tr>
-                    <td>X001</td>
-                    <td>
-                        Unknown or unvalid <code class="higlighted">secret_key</code>. This error appears if you use an unknow API key or if your API key expired.
-                    </td>
-                </tr>
-                <tr>
-                    <td>X002</td>
-                    <td>
-                        Unvalid <code class="higlighted">secret_key</code> for this domain. This error appears if you use an  API key non specified for your domain. Developper or Universal API keys doesn't have domain checker.
-                    </td>
-                </tr>
-                <tr>
-                    <td>X003</td>
-                    <td>
-                        Unknown or unvalid user <code class="higlighted">token</code>. This error appears if you use an unknow user <code class="higlighted">token</code> or if the user <code class="higlighted">token</code> expired.
+                        Invalid request format, request must be JSON.
                     </td>
                 </tr>
                 </tbody>
