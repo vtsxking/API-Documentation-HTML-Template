@@ -67,7 +67,21 @@
             <li class="scroll-to-link" data-target="content-get-address-info">
                 <a>Get Address Info</a>
             </li>
-
+            <li class="scroll-to-link" data-target="content-get-utxos-address">
+                <a>Get Address UTXOs</a>
+            </li>
+			<li class="scroll-to-link" data-target="content-generate-address">
+                <a>Generate Address</a>
+            </li>
+			<li class="scroll-to-link" data-target="content-generate-policy">
+                <a>Generate Policy</a>
+            </li>
+			<li class="scroll-to-link" data-target="content-generate-locking-policy">
+                <a>Generate Locking Policy</a>
+            </li>
+			<li class="scroll-to-link" data-target="content-mint">
+                <a>Mint</a>
+            </li>
 
             <li class="scroll-to-link" data-target="content-errors">
                 <a>Errors</a>
@@ -523,7 +537,7 @@ Result example :
             <pre><code class="bash">
 # Here is a curl example
 curl \
--X GET http://node_ip:5000/get_address_info \ 
+-X POST http://node_ip:5000/get_address_info \ 
 -H 'Content-Type: application/json' \
 -d '{"address":"addr1qy9ryfzjdmnmfcahwuwy5mrav5t8d5vs5cugepnytrt7yqngz2ux66zp9s5pf2e9ax7jrtvk0jv3gh7ud04fwsv02stqwt9fr7"}'
                 </code></pre>
@@ -560,7 +574,237 @@ Result example :
                 </tbody>
             </table>
         </div>
+		<div class="overflow-hidden content-section" id="content-get-utxos-address">
+            <h2>get address UTXOs</h2>
+            <pre><code class="bash">
+# Here is a curl example
+curl \
+-X POST http://node_ip:5000/get_address_utxos \ 
+-H 'Content-Type: application/json' \
+-d '{"address":"addr1qy9ryfzjdmnmfcahwuwy5mrav5t8d5vs5cugepnytrt7yqngz2ux66zp9s5pf2e9ax7jrtvk0jv3gh7ud04fwsv02stqwt9fr7"}'
+                </code></pre>
+            <p>
+                To get a json of the given address UTXOs you need to make a POST call to the following url :<br>
+                <code class="higlighted break-word">http://node_ip:5000/get_address_utxos</code>
+            </p>
+            <br>
+            <pre><code class="json">
+Result example :
+[{
+	"tx_hash": "03aa29d981f8918f3bcebc06e459ed167377ebf4977f0b639e14cb41c44aefbc",
+	"tx_in": "1",
+	"amount": [{
+		"unit": "lovelace",
+		"quantity": "1555554"
+	}, {
+		"unit": "a516ec48b782640e00aea2fc35197264458b5ed60126236bb0b5daba.746573745f746f6b656e5f33",
+		"quantity": "3"
+	}]
+}, {
+	"tx_hash": "0936ab786fbde6dacb8fe17116f593c5638c45ce1124fdd7ad68b29e0ce052db",
+	"tx_in": "12",
+	"amount": [{
+		"unit": "lovelace",
+		"quantity": "13218019"
+	}, {
+		"unit": "a7bee18759945933ea991bbcebb8d0f62db190f54eb5a1cb104a4747.7672626174746c6573",
+		"quantity": "10"
+	}]
+}]
+                </code></pre>
+            <h4>QUERY PARAMETERS</h4>
+            <table class="central-overflow-x">
+                <thead>
+                <tr>
+                    <th>Field</th>
+                    <th>Type</th>
+                    <th>Description</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td>Address</td>
+                    <td>String</td>
+                    <td>The address you want to search.</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+		<div class="overflow-hidden content-section" id="content-generate-address">
+            <h2>generate new address</h2>
+            <pre><code class="bash">
+# Here is a curl example
+curl \
+-X POST http://node_ip:5000/generate_address \ 
+-H 'Content-Type: application/json' \
+-d '{"name":"new_name"}'
+                </code></pre>
+            <p>
+                To create a new payment address you need to make a POST call to the following url :<br>
+                <code class="higlighted break-word">http://node_ip:5000/generate_address</code>
+            </p>
+            <br>
+            <pre><code class="json">
+Result example :
+{
+	"address": "addr1v8uue6m8k4ze5kwfrc27tuzcsham9xr5ktlzqx3lyjgpmdsc7xm8m"
+	//DO NOT SEND ANYTHING TO THIS ADDRESS
+}
+                </code></pre>
+            <h4>QUERY PARAMETERS</h4>
+            <table class="central-overflow-x">
+                <thead>
+                <tr>
+                    <th>Field</th>
+                    <th>Type</th>
+                    <th>Description</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td>Name</td>
+                    <td>String</td>
+                    <td>The name of the new address you want to create</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+		<div class="overflow-hidden content-section" id="content-generate-policy">
+            <h2>generate new *unlocking* policy</h2>
+            <pre><code class="bash">
+# Here is a curl example
+curl \
+-X POST http://node_ip:5000/generate_policy \ 
+-H 'Content-Type: application/json' \
+-d '{"name":"new_name"}'
+                </code></pre>
+            <p>
+                To create a new *unlocking* policy you need to make a POST call to the following url :<br>
+                <code class="higlighted break-word">http://node_ip:5000/generate_policy</code>
+            </p>
+            <br>
+            <pre><code class="json">
+Result example :
+{
+	"policyID": "e7dd418f74827d97432db991b648568550708740fc099b7d51fb9f3f"
+}
+                </code></pre>
+            <h4>QUERY PARAMETERS</h4>
+            <table class="central-overflow-x">
+                <thead>
+                <tr>
+                    <th>Field</th>
+                    <th>Type</th>
+                    <th>Description</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td>Name</td>
+                    <td>String</td>
+                    <td>The name of the new policy you want to create</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+		<div class="overflow-hidden content-section" id="content-generate-locking-policy">
+            <h2>generate new locking policy</h2>
+            <pre><code class="bash">
+# Here is a curl example
+curl \
+-X POST http://127.0.0.1:5000/generate_locking_policy \
+-H 'Content-Type: application/json' \
+-d '{"name":"test", "seconds":"14515200"}'
+                </code></pre>
+            <p>
+                To create a new *locking* policy you need to make a POST call to the following url :<br>
+                <code class="higlighted break-word">http://node_ip:5000/generate_locking_policy</code>
+            </p>
+            <br>
+            <pre><code class="json">
+Result example :
+{ 
+	"policyID": "5b9c235dcd4da5769cae135a06100a7eaa588f844e77dc37fe0f9fb2"
+}
+                </code></pre>
+            <h4>QUERY PARAMETERS</h4>
+            <table class="central-overflow-x">
+                <thead>
+                <tr>
+                    <th>Field</th>
+                    <th>Type</th>
+                    <th>Description</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td>Name</td>
+                    <td>String</td>
+                    <td>The name of the new locking policy you want to create</td>
+                </tr>
+				<tr>
+                    <td>Seconds</td>
+                    <td>String</td>
+                    <td>Number of seconds the policy will remain open starting moment of creation</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+		<div class="overflow-hidden content-section" id="content-mint">
+            <h2>mint request</h2>
+            <pre><code class="bash">
+# Here is a curl example
+curl \
+-X POST http://127.0.0.1:5000/mint \
+-H 'Content-Type: application/json' \
+-d '{"metadata":"\"name\":\"test token 3\"", "policyname":"test", "tokenamount": 3, "tokenname":"test_token_3"}'
 
+                </code></pre>
+            <p>
+                To create a mint request you need to make a POST call to the following url :<br>
+                <code class="higlighted break-word">http://node_ip:5000/mint</code>
+            </p>
+            <br>
+            <pre><code class="json">
+Result example :
+{
+	"Message": "Send 3.29429 ADA to addr1vxad729tvvky3n6f2ka597jjkclfz5mcx8f8qr5dk79aczqt76gdq"
+}
+  
+                </code></pre>
+            <h4>QUERY PARAMETERS</h4>
+            <table class="central-overflow-x">
+                <thead>
+                <tr>
+                    <th>Field</th>
+                    <th>Type</th>
+                    <th>Description</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td>Metadata</td>
+                    <td>String</td>
+                    <td>The data to be wrapped with proper 721 meta data format</td>
+                </tr>
+				<tr>
+                    <td>Policy Name</td>
+                    <td>String</td>
+                    <td>Name of a previously created policy</td>
+                </tr>
+				<tr>
+                    <td>Token Amount</td>
+                    <td>Int</td>
+                    <td>Number of tokens to be minted</td>
+                </tr>
+				<tr>
+                    <td>Token Name</td>
+                    <td>Int</td>
+                    <td>Name of token</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
 
         <div class="overflow-hidden content-section" id="content-errors">
             <h2>Errors</h2>
